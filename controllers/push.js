@@ -20,14 +20,14 @@ exports.saveSubscription = async (req, res) => {
 
   try {
     const subs = await Push.findOne({ endpoint: sub.endpoint });
-    console.log(subs);
+    //console.log(subs);
     if (!subs) {
       const newSub = await Push.create({
         endpoint: sub.endpoint,
         expirationTime: sub.expirationTime,
         keys: sub.keys,
       });
-      console.log(newSub);
+      //console.log(newSub);
       res.status(200).json({ success: true, newSub });
     } else res.status(200).json({ success: true });
   } catch (err) {

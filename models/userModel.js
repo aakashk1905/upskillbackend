@@ -34,16 +34,22 @@ const userSchema = new mongoose.Schema({
   language: {
     type: String,
   },
+  level: {
+    type: String,
+    default: "Freshi",
+  },
   streakData: {
     streak: {
       type: Number,
       required: true,
       default: 0,
     },
-    streakDate: {
-      type: Date,
-      default: Date.now,
-    },
+    streakDates: [
+      {
+        type: Date,
+        default: Date.now,
+      },
+    ],
   },
 });
 
