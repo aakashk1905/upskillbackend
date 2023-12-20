@@ -112,20 +112,21 @@ exports.updateStreak = (email) => {
         ) {
           user.streakData.streakDates = [];
           user.streakData.streak = 1;
+          user.streakData.streakDates.push(new Date());
         } else {
           const lastStreakDate = streakDates[streakDates.length - 1].getDate();
           const currentDate = new Date().getDate();
           if (currentDate - lastStreakDate > 1) {
             user.streakData.streak = 1;
+            user.streakData.streakDates.push(new Date());
           } else if (currentDate - lastStreakDate === 1) {
             user.streakData.streak += 1;
+            user.streakData.streakDates.push(new Date());
           }
         }
         if (streakDates.length > 31) {
           streakDates.shift();
         }
-
-        user.streakData.streakDates.push(new Date());
 
         user
           .save()
