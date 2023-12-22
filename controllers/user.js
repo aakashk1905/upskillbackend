@@ -49,6 +49,14 @@ exports.getUser = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+exports.getAll = async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ success: true, total: users.length, users: users });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 
 exports.setLang = async (req, res) => {
   const language = req.query.language;
