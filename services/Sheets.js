@@ -20,16 +20,21 @@ exports.getTask = async (email) => {
 
     let t1 = doc.sheetsByTitle["Task_1"];
     const t1rows = await t1.getRows();
-    const r1 = t1rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
+    var r1 = [];
 
-    );
+    if (t1rows.length > 0) {
+      r1 = t1rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r1.length > 0) {
       jsonData = {
         email: email,
-        name: r1[r1.length - 1].get(
-          "names"
-        ),
+        name: r1[r1.length - 1].get("names"),
         file: r1[r1.length - 1].get("file"),
         link: r1[r1.length - 1].get("link"),
       };
@@ -41,17 +46,22 @@ exports.getTask = async (email) => {
     let t2 = doc.sheetsByTitle["Task_2"];
     const t2rows = await t2.getRows();
 
-    console.log(t2rows[0].get("email").split(","));
-    const r2 = t2rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
-    );
+    var r2 = [];
+
+    if (t2rows.length > 0) {
+      r2 = t2rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     // console.log(r2);
     if (r2.length > 0) {
       jsonData = {
         email: email,
-        name: r2[r2.length - 1].get(
-          "names"
-        ),
+        name: r2[r2.length - 1].get("names"),
         file: r2[r2.length - 1].get("file"),
         link: r2[r2.length - 1].get("link"),
       };
@@ -62,17 +72,22 @@ exports.getTask = async (email) => {
 
     let t3 = doc.sheetsByTitle["Task_3"];
     const t3rows = await t3.getRows();
-    console.log(t3rows[0].get("email").split(","));
-    const r3 = t3rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
 
-    );
+    var r3 = [];
+
+    if (t3rows.length > 0) {
+      r3 = t3rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r3.length > 0) {
       jsonData = {
         email: email,
-        name: r3[r3.length - 1].get(
-          "names"
-        ),
+        name: r3[r3.length - 1].get("names"),
         file: r3[r3.length - 1].get("file"),
         link: r3[r3.length - 1].get("link"),
       };
@@ -83,17 +98,22 @@ exports.getTask = async (email) => {
 
     let t4 = doc.sheetsByTitle["Task_4"];
     const t4rows = await t4.getRows();
-    console.log(t4rows[0].get("email").split(","));
-    const r4 = t4rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
 
-    );
+    var r4 = [];
+
+    if (t4rows.length > 0) {
+      r4 = t4rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r4.length > 0) {
       jsonData = {
         email: email,
-        name: r4[r4.length - 1].get(
-          "names"
-        ),
+        name: r4[r4.length - 1].get("names"),
         file: r4[r4.length - 1].get("file"),
         link: r4[r4.length - 1].get("link"),
       };
@@ -104,17 +124,22 @@ exports.getTask = async (email) => {
 
     let t5 = doc.sheetsByTitle["Task_5"];
     const t5rows = await t5.getRows();
-    console.log(t5rows[0].get("email").split(","));
-    const r5 = t5rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
 
-    );
+    var r5 = [];
+
+    if (t5rows.length > 0) {
+      r5 = t5rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r5.length > 0) {
       jsonData = {
         email: email,
-        name: r5[r5.length - 1].get(
-          "names"
-        ),
+        name: r5[r5.length - 1].get("names"),
         file: r5[r5.length - 1].get("file"),
         link: r5[r5.length - 1].get("link"),
       };
@@ -125,19 +150,21 @@ exports.getTask = async (email) => {
 
     let t6 = doc.sheetsByTitle["Task_6"];
     const t6rows = await t6.getRows();
+    var r6 = [];
 
-    console.log(t6rows[0].get("email").split(","));
-
-    const r6 = t6rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
-
-    );
+    if (t6rows.length > 0) {
+      r6 = t6rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r6.length > 0) {
       jsonData = {
         email: email,
-        name: r6[r6.length - 1].get(
-          "names"
-        ),
+        name: r6[r6.length - 1].get("names"),
         file: r6[r6.length - 1].get("file"),
         link: r6[r6.length - 1].get("link"),
       };
@@ -149,18 +176,21 @@ exports.getTask = async (email) => {
     let t7 = doc.sheetsByTitle["Task_7"];
     const t7rows = await t7.getRows();
 
-    console.log(t7rows[0].get("email").split(","));
+    var r7 = [];
 
-    const r7 = t7rows.filter((row) =>
-      row.get("email").split(",").map(email => email.trim()).includes(email)
-
-    );
+    if (t7rows.length > 0) {
+      r7 = t7rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
     if (r7.length > 0) {
       jsonData = {
         email: email,
-        name: r7[r7.length - 1].get(
-          "names"
-        ),
+        name: r7[r7.length - 1].get("names"),
         file: r7[r7.length - 1].get("file"),
         link: r7[r7.length - 1].get("link"),
       };
