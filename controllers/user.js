@@ -80,7 +80,6 @@ exports.closed = async (req, res) => {
     });
 };
 
-
 exports.gettaskbymail = async (req, res) => {
   const email = req.query.email;
   gettaskbymail(email)
@@ -89,7 +88,6 @@ exports.gettaskbymail = async (req, res) => {
       res.status(500).json({ success: false, error: err.message });
     });
 };
-
 
 exports.updateStreak = async (req, res) => {
   const email = req.query.email;
@@ -179,9 +177,9 @@ exports.forgot = async (req, res) => {
   user.resetPasswordToken = otp;
   user.resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000);
   await user.save();
-  console.log(otp);
+  // console.log(otp);
   try {
-    console.log("user");
+    // console.log("user");
     await sendOtp(number, otp);
     res.status(200).json({
       success: true,
@@ -199,7 +197,7 @@ exports.forgot = async (req, res) => {
 };
 exports.reset = async (req, res) => {
   const otp = req.body.otp;
-  // console.log(otp, req.body.password, Date.now());
+
   const user = await User.findOne({
     resetPasswordToken: otp,
     resetPasswordExpire: { $gt: new Date() },
@@ -219,31 +217,35 @@ exports.reset = async (req, res) => {
 
   res.status(200).json({
     success: true,
-    message: "password reset Successfull",
+    message: "Password Reset Successfull",
     user,
   });
 };
 
-// const sendToken = (user, statusCode, res) => {
-//   const token = user.getJWTToken();
-//   //options for the cookie
-//   const options = {
-//     expires: new Date(
-//       Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-//     ),
-//     httpOnly: true,
-//   };
-//   return res.status(statusCode).cookie("token", token, options).json({
-//     success: true,
-//     user,
-//     token,
-//   });
-// };
-
 const sendOtp = async (number, otp) => {
   try {
-    console.log("sendOtp", number, otp);
+    const response = await fetch("https://api.interakt.ai/v1/public/message/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic MGRiYUtNMDNSRlFteUJ2VGJTSkVzTVhBNnl6X2sxX2phc2JldjU3OWhSUTo=",
+      },
+      body: JSON.stringify({
+        countryCode: "+91",
+        phoneNumber: number,
+        type: "Template",
+        template: {
+          name: "forgot_password",
+          languageCode: "en",
+          bodyValues: [otp],
+        },
+      }),
+    });
+
+    if (!response.ok) throw new Error("Something went Wrong");
   } catch (e) {
+    console.log(e);
     throw e;
   }
 };
