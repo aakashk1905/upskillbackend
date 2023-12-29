@@ -199,6 +199,188 @@ exports.getTask = async (email) => {
       });
     }
 
+    let t8 = doc.sheetsByTitle["Task_8"];
+    const t8rows = await t8.getRows();
+
+    var r8 = [];
+
+    if (t8rows.length > 0) {
+      r8 = t8rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r8.length > 0) {
+      jsonData = {
+        email: email,
+        name: r8[r8.length - 1].get("names"),
+        file: r8[r8.length - 1].get("file"),
+        link: r8[r8.length - 1].get("link"),
+      };
+      tasks.push({
+        task8: jsonData,
+      });
+    }
+
+    let t9 = doc.sheetsByTitle["Task_9"];
+    const t9rows = await t9.getRows();
+
+    var r9 = [];
+
+    if (t9rows.length > 0) {
+      r9 = t9rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r9.length > 0) {
+      jsonData = {
+        email: email,
+        name: r9[r9.length - 1].get("names"),
+        file: r9[r9.length - 1].get("file"),
+        link: r9[r9.length - 1].get("link"),
+      };
+      tasks.push({
+        task9: jsonData,
+      });
+    }
+
+    let t10 = doc.sheetsByTitle["Task_10"];
+    const t10rows = await t10.getRows();
+
+    var r10 = [];
+
+    if (t10rows.length > 0) {
+      r10 = t10rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r10.length > 0) {
+      jsonData = {
+        email: email,
+        name: r10[r10.length - 1].get("names"),
+        file: r10[r10.length - 1].get("file"),
+        link: r10[r10.length - 1].get("link"),
+      };
+      tasks.push({
+        task10: jsonData,
+      });
+    }
+
+    let t11 = doc.sheetsByTitle["Task_11"];
+    const t11rows = await t11.getRows();
+
+    var r11 = [];
+
+    if (t11rows.length > 0) {
+      r11 = t11rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r11.length > 0) {
+      jsonData = {
+        email: email,
+        name: r11[r11.length - 1].get("names"),
+        file: r11[r11.length - 1].get("file"),
+        link: r11[r11.length - 1].get("link"),
+      };
+      tasks.push({
+        task11: jsonData,
+      });
+    }
+
+    let t12 = doc.sheetsByTitle["Task_12"];
+    const t12rows = await t12.getRows();
+
+    var r12 = [];
+
+    if (t12rows.length > 0) {
+      r12 = t12rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r12.length > 0) {
+      jsonData = {
+        email: email,
+        name: r12[r12.length - 1].get("names"),
+        file: r12[r12.length - 1].get("file"),
+        link: r12[r12.length - 1].get("link"),
+      };
+      tasks.push({
+        task12: jsonData,
+      });
+    }
+
+    let t13 = doc.sheetsByTitle["Task_13"];
+    const t13rows = await t13.getRows();
+
+    var r13 = [];
+
+    if (t13rows.length > 0) {
+      r13 = t13rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r13.length > 0) {
+      jsonData = {
+        email: email,
+        name: r13[r13.length - 1].get("names"),
+        file: r13[r13.length - 1].get("file"),
+        link: r13[r13.length - 1].get("link"),
+      };
+      tasks.push({
+        task13: jsonData,
+      });
+    }
+
+    let t14 = doc.sheetsByTitle["Task_14"];
+    const t14rows = await t14.getRows();
+
+    var r14 = [];
+
+    if (t14rows.length > 0) {
+      r14 = t14rows.filter((row) =>
+        row
+          .get("email")
+          .split(",")
+          .map((email) => email.trim())
+          .includes(email)
+      );
+    }
+    if (r14.length > 0) {
+      jsonData = {
+        email: email,
+        name: r14[r14.length - 1].get("names"),
+        file: r14[r14.length - 1].get("file"),
+        link: r14[r14.length - 1].get("link"),
+      };
+      tasks.push({
+        task14: jsonData,
+      });
+    }
+
     return tasks;
   } catch (error) {
     console.error("Error adding rows:", error);
