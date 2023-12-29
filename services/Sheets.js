@@ -41,9 +41,9 @@ exports.getTask = async (email) => {
     let t2 = doc.sheetsByTitle["Task_2"];
     const t2rows = await t2.getRows();
 
+    console.log(t2rows[0].get("email").split(","));
     const r2 = t2rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
-
     );
     // console.log(r2);
     if (r2.length > 0) {
@@ -62,7 +62,7 @@ exports.getTask = async (email) => {
 
     let t3 = doc.sheetsByTitle["Task_3"];
     const t3rows = await t3.getRows();
-
+    console.log(t3rows[0].get("email").split(","));
     const r3 = t3rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
 
@@ -83,7 +83,7 @@ exports.getTask = async (email) => {
 
     let t4 = doc.sheetsByTitle["Task_4"];
     const t4rows = await t4.getRows();
-
+    console.log(t4rows[0].get("email").split(","));
     const r4 = t4rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
 
@@ -104,7 +104,7 @@ exports.getTask = async (email) => {
 
     let t5 = doc.sheetsByTitle["Task_5"];
     const t5rows = await t5.getRows();
-
+    console.log(t5rows[0].get("email").split(","));
     const r5 = t5rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
 
@@ -125,6 +125,9 @@ exports.getTask = async (email) => {
 
     let t6 = doc.sheetsByTitle["Task_6"];
     const t6rows = await t6.getRows();
+
+    console.log(t6rows[0].get("email").split(","));
+
     const r6 = t6rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
 
@@ -145,6 +148,8 @@ exports.getTask = async (email) => {
 
     let t7 = doc.sheetsByTitle["Task_7"];
     const t7rows = await t7.getRows();
+
+    console.log(t7rows[0].get("email").split(","));
 
     const r7 = t7rows.filter((row) =>
       row.get("email").split(",").map(email => email.trim()).includes(email)
