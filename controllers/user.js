@@ -2,7 +2,12 @@ const User = require("../models/userModel");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config/config.env" });
 const jwt = require("jsonwebtoken");
-const { setLang, updateStreak } = require("../services/userService");
+const {
+  joined,
+  closed,
+  updateStreak,
+  gettaskbymail,
+} = require("../services/userService");
 
 exports.registerUser = async (req, res) => {
   const { name, email, password, mobile } = req.body;
@@ -58,15 +63,34 @@ exports.getAll = async (req, res) => {
   }
 };
 
-exports.setLang = async (req, res) => {
-  const language = req.query.language;
+exports.joined = async (req, res) => {
   const email = req.query.email;
-  setLang(email, language)
+  joined(email)
     .then((data) => res.status(200).json({ success: true, user: data }))
     .catch((err) => {
       res.status(500).json({ success: false, error: err.message });
     });
 };
+exports.closed = async (req, res) => {
+  const email = req.query.email;
+  closed(email)
+    .then((data) => res.status(200).json({ success: true, user: data }))
+    .catch((err) => {
+      res.status(500).json({ success: false, error: err.message });
+    });
+};
+
+
+exports.gettaskbymail = async (req, res) => {
+  const email = req.query.email;
+  gettaskbymail(email)
+    .then((data) => res.status(200).json({ success: true, tasks: data }))
+    .catch((err) => {
+      res.status(500).json({ success: false, error: err.message });
+    });
+};
+
+
 exports.updateStreak = async (req, res) => {
   const email = req.query.email;
   updateStreak(email)
@@ -137,30 +161,89 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// logout user
-exports.logoutUser = async (req, res) => {
-  res.cookie("token", null, {
-    expires: new Date(Date.now()),
-    httpOnly: true,
+// Forgot user
+exports.forgot = async (req, res) => {
+  const number = req.query.number;
+
+  // check if user entered correct number
+  const user = await User.findOne({ mobile: number });
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      message: "No Account Registered With This Number",
+    });
+  }
+
+  // generate otp
+  const otp = Math.floor(Math.random() * 9000) + 1000;
+  user.resetPasswordToken = otp;
+  user.resetPasswordExpire = new Date(Date.now() + 10 * 60 * 1000);
+  await user.save();
+  console.log(otp);
+  try {
+    console.log("user");
+    await sendOtp(number, otp);
+    res.status(200).json({
+      success: true,
+      message: "Otp Sent to Whatsapp",
+    });
+  } catch (err) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return res.status(500).json({
+      success: false,
+      message: "Something Went Wrong please try again",
+    });
+  }
+};
+exports.reset = async (req, res) => {
+  const otp = req.body.otp;
+  // console.log(otp, req.body.password, Date.now());
+  const user = await User.findOne({
+    resetPasswordToken: otp,
+    resetPasswordExpire: { $gt: new Date() },
   });
+  // console.log(user);
+  if (!user) {
+    return res.status(401).json({
+      success: false,
+      message: "OTP is Incorrect or has expired. Please try again",
+    });
+  }
+
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
   res.status(200).json({
     success: true,
-    Message: "Logged out",
+    message: "password reset Successfull",
+    user,
   });
 };
 
-const sendToken = (user, statusCode, res) => {
-  const token = user.getJWTToken();
-  //options for the cookie
-  const options = {
-    expires: new Date(
-      Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
-    ),
-    httpOnly: true,
-  };
-  return res.status(statusCode).cookie("token", token, options).json({
-    success: true,
-    user,
-    token,
-  });
+// const sendToken = (user, statusCode, res) => {
+//   const token = user.getJWTToken();
+//   //options for the cookie
+//   const options = {
+//     expires: new Date(
+//       Date.now() + process.env.COOKIE_EXPIRES * 24 * 60 * 60 * 1000
+//     ),
+//     httpOnly: true,
+//   };
+//   return res.status(statusCode).cookie("token", token, options).json({
+//     success: true,
+//     user,
+//     token,
+//   });
+// };
+
+const sendOtp = async (number, otp) => {
+  try {
+    console.log("sendOtp", number, otp);
+  } catch (e) {
+    throw e;
+  }
 };

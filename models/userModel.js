@@ -34,6 +34,13 @@ const userSchema = new mongoose.Schema({
   language: {
     type: String,
   },
+  joined: {
+    type: Boolean,
+  },
+  closed: {
+    type: Number,
+    defaul:0
+  },
   level: {
     type: String,
     default: "Freshi",
@@ -51,6 +58,8 @@ const userSchema = new mongoose.Schema({
       },
     ],
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 });
 
 userSchema.pre("save", async function (next) {

@@ -1,6 +1,8 @@
 const userModel = require("../models/userModel");
+const { getTask } = require("./Sheets");
 
-exports.setLang = (email, language) => {
+exports.joined = (email) => {
+  console.log(email);
   return new Promise((resolve, reject) => {
     userModel
       .findOne({ email })
@@ -9,7 +11,32 @@ exports.setLang = (email, language) => {
         if (!user) {
           reject(new Error("No Records for this email Found"));
         }
-        user.language = language;
+        user.joined = true;
+        user
+          .save()
+          .then((user) => {
+            resolve(user);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+};
+exports.closed = (email) => {
+  return new Promise((resolve, reject) => {
+    userModel
+      .findOne({ email })
+      .exec()
+      .then((user) => {
+        if (!user) {
+          reject(new Error("No Records for this email Found"));
+        }
+        if (user.closed) user.closed += 1;
+        else user.closed = 1;
         user
           .save()
           .then((user) => {
@@ -139,6 +166,18 @@ exports.updateStreak = (email) => {
       })
       .catch((err) => {
         reject(err);
+      });
+  });
+};
+exports.gettaskbymail = (email) => {
+  return new Promise((resolve, reject) => {
+    getTask(email)
+      .then((tasks) => {
+        resolve(tasks);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        reject(error);
       });
   });
 };
