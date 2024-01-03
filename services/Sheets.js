@@ -25,10 +25,8 @@ exports.getTask = async (email) => {
     if (t1rows.length > 0) {
       r1 = t1rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r1.length > 0) {
@@ -50,10 +48,8 @@ exports.getTask = async (email) => {
     if (t2rows.length > 0) {
       r2 = t2rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     // console.log(r2);
@@ -76,10 +72,8 @@ exports.getTask = async (email) => {
     if (t3rows.length > 0) {
       r3 = t3rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r3.length > 0) {
@@ -101,10 +95,8 @@ exports.getTask = async (email) => {
     if (t4rows.length > 0) {
       r4 = t4rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r4.length > 0) {
@@ -126,10 +118,8 @@ exports.getTask = async (email) => {
     if (t5rows.length > 0) {
       r5 = t5rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r5.length > 0) {
@@ -150,10 +140,8 @@ exports.getTask = async (email) => {
     if (t6rows.length > 0) {
       r6 = t6rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r6.length > 0) {
@@ -175,10 +163,8 @@ exports.getTask = async (email) => {
     if (t7rows.length > 0) {
       r7 = t7rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r7.length > 0) {
@@ -200,10 +186,8 @@ exports.getTask = async (email) => {
     if (t8rows.length > 0) {
       r8 = t8rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r8.length > 0) {
@@ -225,10 +209,8 @@ exports.getTask = async (email) => {
     if (t9rows.length > 0) {
       r9 = t9rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r9.length > 0) {
@@ -250,10 +232,8 @@ exports.getTask = async (email) => {
     if (t10rows.length > 0) {
       r10 = t10rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r10.length > 0) {
@@ -275,10 +255,8 @@ exports.getTask = async (email) => {
     if (t11rows.length > 0) {
       r11 = t11rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r11.length > 0) {
@@ -300,10 +278,8 @@ exports.getTask = async (email) => {
     if (t12rows.length > 0) {
       r12 = t12rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r12.length > 0) {
@@ -325,10 +301,8 @@ exports.getTask = async (email) => {
     if (t13rows.length > 0) {
       r13 = t13rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r13.length > 0) {
@@ -350,10 +324,8 @@ exports.getTask = async (email) => {
     if (t14rows.length > 0) {
       r14 = t14rows.filter((row) =>
         row
-          .get("email")
-          .split(",")
-          .map((email) => email.trim())
-          .includes(email)
+          .get("email").toLowerCase()
+          .includes(email.toLowerCase())
       );
     }
     if (r14.length > 0) {
