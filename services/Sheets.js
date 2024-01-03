@@ -16,7 +16,7 @@ exports.getTask = async (email) => {
   try {
     await doc.loadInfo();
 
-    const tasks = [];
+    const tasks = {};
 
     let t1 = doc.sheetsByTitle["Task_1"];
     const t1rows = await t1.getRows();
@@ -32,15 +32,14 @@ exports.getTask = async (email) => {
       );
     }
     if (r1.length > 0) {
-      jsonData = {
+      const task1 = {
         email: email,
         name: r1[r1.length - 1].get("names"),
+        dos: r1[r1.length - 1].get("Timestamp"),
         file: r1[r1.length - 1].get("file"),
         link: r1[r1.length - 1].get("link"),
       };
-      tasks.push({
-        task1: jsonData,
-      });
+      tasks["task1"] = task1;
     }
 
     let t2 = doc.sheetsByTitle["Task_2"];
@@ -62,12 +61,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r2[r2.length - 1].get("names"),
+        dos: r2[r2.length - 1].get("Timestamp"),
         file: r2[r2.length - 1].get("file"),
         link: r2[r2.length - 1].get("link"),
       };
-      tasks.push({
-        task2: jsonData,
-      });
+      tasks["task2"] = jsonData;
     }
 
     let t3 = doc.sheetsByTitle["Task_3"];
@@ -88,12 +86,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r3[r3.length - 1].get("names"),
+        dos: r3[r3.length - 1].get("Timestamp"),
         file: r3[r3.length - 1].get("file"),
         link: r3[r3.length - 1].get("link"),
       };
-      tasks.push({
-        task3: jsonData,
-      });
+      tasks["task3"] = jsonData;
     }
 
     let t4 = doc.sheetsByTitle["Task_4"];
@@ -114,12 +111,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r4[r4.length - 1].get("names"),
+        dos: r4[r4.length - 1].get("Timestamp"),
         file: r4[r4.length - 1].get("file"),
         link: r4[r4.length - 1].get("link"),
       };
-      tasks.push({
-        task4: jsonData,
-      });
+      tasks["task4"] = jsonData;
     }
 
     let t5 = doc.sheetsByTitle["Task_5"];
@@ -140,12 +136,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r5[r5.length - 1].get("names"),
+        dos: r5[r5.length - 1].get("Timestamp"),
         file: r5[r5.length - 1].get("file"),
         link: r5[r5.length - 1].get("link"),
       };
-      tasks.push({
-        task5: jsonData,
-      });
+      tasks["task5"] = jsonData;
     }
 
     let t6 = doc.sheetsByTitle["Task_6"];
@@ -165,12 +160,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r6[r6.length - 1].get("names"),
+        dos: r6[r6.length - 1].get("Timestamp"),
         file: r6[r6.length - 1].get("file"),
         link: r6[r6.length - 1].get("link"),
       };
-      tasks.push({
-        task6: jsonData,
-      });
+      tasks["task6"] = jsonData;
     }
 
     let t7 = doc.sheetsByTitle["Task_7"];
@@ -191,12 +185,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r7[r7.length - 1].get("names"),
+        dos: r7[r7.length - 1].get("Timestamp"),
         file: r7[r7.length - 1].get("file"),
         link: r7[r7.length - 1].get("link"),
       };
-      tasks.push({
-        task7: jsonData,
-      });
+      tasks["task7"] = jsonData;
     }
 
     let t8 = doc.sheetsByTitle["Task_8"];
@@ -217,12 +210,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r8[r8.length - 1].get("names"),
+        dos: r8[r8.length - 1].get("Timestamp"),
         file: r8[r8.length - 1].get("file"),
         link: r8[r8.length - 1].get("link"),
       };
-      tasks.push({
-        task8: jsonData,
-      });
+      tasks["task8"] = jsonData;
     }
 
     let t9 = doc.sheetsByTitle["Task_9"];
@@ -243,12 +235,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r9[r9.length - 1].get("names"),
+        dos: r9[r9.length - 1].get("Timestamp"),
         file: r9[r9.length - 1].get("file"),
         link: r9[r9.length - 1].get("link"),
       };
-      tasks.push({
-        task9: jsonData,
-      });
+      tasks["task9"] = jsonData;
     }
 
     let t10 = doc.sheetsByTitle["Task_10"];
@@ -269,12 +260,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r10[r10.length - 1].get("names"),
+        dos: r10[r10.length - 1].get("Timestamp"),
         file: r10[r10.length - 1].get("file"),
         link: r10[r10.length - 1].get("link"),
       };
-      tasks.push({
-        task10: jsonData,
-      });
+      tasks["task10"] = jsonData;
     }
 
     let t11 = doc.sheetsByTitle["Task_11"];
@@ -295,12 +285,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r11[r11.length - 1].get("names"),
+        dos: r11[r11.length - 1].get("Timestamp"),
         file: r11[r11.length - 1].get("file"),
         link: r11[r11.length - 1].get("link"),
       };
-      tasks.push({
-        task11: jsonData,
-      });
+      tasks["task11"] = jsonData;
     }
 
     let t12 = doc.sheetsByTitle["Task_12"];
@@ -321,12 +310,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r12[r12.length - 1].get("names"),
+        dos: r12[r12.length - 1].get("Timestamp"),
         file: r12[r12.length - 1].get("file"),
         link: r12[r12.length - 1].get("link"),
       };
-      tasks.push({
-        task12: jsonData,
-      });
+      tasks["task12"] = jsonData;
     }
 
     let t13 = doc.sheetsByTitle["Task_13"];
@@ -347,12 +335,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r13[r13.length - 1].get("names"),
+        dos: r13[r13.length - 1].get("Timestamp"),
         file: r13[r13.length - 1].get("file"),
         link: r13[r13.length - 1].get("link"),
       };
-      tasks.push({
-        task13: jsonData,
-      });
+      tasks["task13"] = jsonData;
     }
 
     let t14 = doc.sheetsByTitle["Task_14"];
@@ -373,12 +360,11 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r14[r14.length - 1].get("names"),
+        dos: r14[r14.length - 1].get("Timestamp"),
         file: r14[r14.length - 1].get("file"),
         link: r14[r14.length - 1].get("link"),
       };
-      tasks.push({
-        task14: jsonData,
-      });
+      tasks["task14"] = jsonData;
     }
 
     return tasks;

@@ -150,6 +150,22 @@ exports.updateStreak = (email) => {
             user.streakData.streak += 1;
             user.streakData.streakDates.push(new Date());
           }
+
+          if (
+            new Date().getMonth() !==
+            streakDates[streakDates.length - 1].getMonth()
+          ) {
+            if (
+              new Date() - streakDates[streakDates.length - 1] >
+              48 * 60 * 60 * 1000
+            ) {
+              user.streakData.streak = 1;
+              user.streakData.streakDates.push(new Date());
+            } else {
+              user.streakData.streak += 1;
+              user.streakData.streakDates.push(new Date());
+            }
+          }
         }
         if (streakDates.length > 31) {
           streakDates.shift();
