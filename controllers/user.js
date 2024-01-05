@@ -7,6 +7,8 @@ const {
   closed,
   updateStreak,
   gettaskbymail,
+  // updateStreakAll,
+  updatetaskbymail,
 } = require("../services/userService");
 
 exports.registerUser = async (req, res) => {
@@ -88,7 +90,18 @@ exports.gettaskbymail = async (req, res) => {
       res.status(500).json({ success: false, error: err.message });
     });
 };
+exports.updatetaskbymail = async (req, res) => {
+  const email = req.query.email;
+  const sheetname = req.query.sheetname;
+  const status = req.query.status;
+  updatetaskbymail(email,sheetname,status)
+    .then((data) => res.status(200).json({ success: true, tasks: data }))
+    .catch((err) => {
+      res.status(500).json({ success: false, error: err.message });
+    });
+};
 
+// updateStreakAll("rockingak187@gmail.com");
 exports.updateStreak = async (req, res) => {
   const email = req.query.email;
   updateStreak(email)

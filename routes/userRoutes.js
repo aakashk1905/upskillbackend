@@ -10,6 +10,7 @@ const {
   updateStreak,
   gettaskbymail,
   getAll,
+  updatetaskbymail
 } = require("../controllers/user");
 const router = express.Router();
 
@@ -23,5 +24,6 @@ router.route("/user/joined").post(joined);
 router.route("/user/closed").post(closed);
 router.route("/user/update-streak").post(updateStreak);
 router.route("/user/gettaskbymail").get(gettaskbymail);
+router.route("/user/updatetaskbymail").post(updatetaskbymail);
 
 module.exports = router;

@@ -24,15 +24,15 @@ exports.getTask = async (email) => {
 
     if (t1rows.length > 0) {
       r1 = t1rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
+    // console.log(r1[r1.length - 1]);
     if (r1.length > 0) {
       const task1 = {
         email: email,
         name: r1[r1.length - 1].get("names"),
+        status: r1[r1.length - 1].get("status"),
         dos: r1[r1.length - 1].get("Timestamp"),
         file: r1[r1.length - 1].get("file"),
         link: r1[r1.length - 1].get("link"),
@@ -47,9 +47,7 @@ exports.getTask = async (email) => {
 
     if (t2rows.length > 0) {
       r2 = t2rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     // console.log(r2);
@@ -57,6 +55,7 @@ exports.getTask = async (email) => {
       jsonData = {
         email: email,
         name: r2[r2.length - 1].get("names"),
+        status: r2[r2.length - 1].get("status"),
         dos: r2[r2.length - 1].get("Timestamp"),
         file: r2[r2.length - 1].get("file"),
         link: r2[r2.length - 1].get("link"),
@@ -71,15 +70,14 @@ exports.getTask = async (email) => {
 
     if (t3rows.length > 0) {
       r3 = t3rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r3.length > 0) {
       jsonData = {
         email: email,
         name: r3[r3.length - 1].get("names"),
+        status: r3[r3.length - 1].get("status"),
         dos: r3[r3.length - 1].get("Timestamp"),
         file: r3[r3.length - 1].get("file"),
         link: r3[r3.length - 1].get("link"),
@@ -94,15 +92,14 @@ exports.getTask = async (email) => {
 
     if (t4rows.length > 0) {
       r4 = t4rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r4.length > 0) {
       jsonData = {
         email: email,
         name: r4[r4.length - 1].get("names"),
+        status: r4[r4.length - 1].get("status"),
         dos: r4[r4.length - 1].get("Timestamp"),
         file: r4[r4.length - 1].get("file"),
         link: r4[r4.length - 1].get("link"),
@@ -117,15 +114,14 @@ exports.getTask = async (email) => {
 
     if (t5rows.length > 0) {
       r5 = t5rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r5.length > 0) {
       jsonData = {
         email: email,
         name: r5[r5.length - 1].get("names"),
+        status: r5[r5.length - 1].get("status"),
         dos: r5[r5.length - 1].get("Timestamp"),
         file: r5[r5.length - 1].get("file"),
         link: r5[r5.length - 1].get("link"),
@@ -139,15 +135,14 @@ exports.getTask = async (email) => {
 
     if (t6rows.length > 0) {
       r6 = t6rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r6.length > 0) {
       jsonData = {
         email: email,
         name: r6[r6.length - 1].get("names"),
+        status: r6[r6.length - 1].get("status"),
         dos: r6[r6.length - 1].get("Timestamp"),
         file: r6[r6.length - 1].get("file"),
         link: r6[r6.length - 1].get("link"),
@@ -162,15 +157,14 @@ exports.getTask = async (email) => {
 
     if (t7rows.length > 0) {
       r7 = t7rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r7.length > 0) {
       jsonData = {
         email: email,
         name: r7[r7.length - 1].get("names"),
+        status: r7[r7.length - 1].get("status"),
         dos: r7[r7.length - 1].get("Timestamp"),
         file: r7[r7.length - 1].get("file"),
         link: r7[r7.length - 1].get("link"),
@@ -185,15 +179,14 @@ exports.getTask = async (email) => {
 
     if (t8rows.length > 0) {
       r8 = t8rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r8.length > 0) {
       jsonData = {
         email: email,
         name: r8[r8.length - 1].get("names"),
+        status: r8[r8.length - 1].get("status"),
         dos: r8[r8.length - 1].get("Timestamp"),
         file: r8[r8.length - 1].get("file"),
         link: r8[r8.length - 1].get("link"),
@@ -208,15 +201,14 @@ exports.getTask = async (email) => {
 
     if (t9rows.length > 0) {
       r9 = t9rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r9.length > 0) {
       jsonData = {
         email: email,
         name: r9[r9.length - 1].get("names"),
+        status: r9[r9.length - 1].get("status"),
         dos: r9[r9.length - 1].get("Timestamp"),
         file: r9[r9.length - 1].get("file"),
         link: r9[r9.length - 1].get("link"),
@@ -231,15 +223,14 @@ exports.getTask = async (email) => {
 
     if (t10rows.length > 0) {
       r10 = t10rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r10.length > 0) {
       jsonData = {
         email: email,
         name: r10[r10.length - 1].get("names"),
+        status: r10[r10.length - 1].get("status"),
         dos: r10[r10.length - 1].get("Timestamp"),
         file: r10[r10.length - 1].get("file"),
         link: r10[r10.length - 1].get("link"),
@@ -254,15 +245,14 @@ exports.getTask = async (email) => {
 
     if (t11rows.length > 0) {
       r11 = t11rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r11.length > 0) {
       jsonData = {
         email: email,
         name: r11[r11.length - 1].get("names"),
+        status: r11[r11.length - 1].get("status"),
         dos: r11[r11.length - 1].get("Timestamp"),
         file: r11[r11.length - 1].get("file"),
         link: r11[r11.length - 1].get("link"),
@@ -277,15 +267,14 @@ exports.getTask = async (email) => {
 
     if (t12rows.length > 0) {
       r12 = t12rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r12.length > 0) {
       jsonData = {
         email: email,
         name: r12[r12.length - 1].get("names"),
+        status: r12[r12.length - 1].get("status"),
         dos: r12[r12.length - 1].get("Timestamp"),
         file: r12[r12.length - 1].get("file"),
         link: r12[r12.length - 1].get("link"),
@@ -300,15 +289,14 @@ exports.getTask = async (email) => {
 
     if (t13rows.length > 0) {
       r13 = t13rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r13.length > 0) {
       jsonData = {
         email: email,
         name: r13[r13.length - 1].get("names"),
+        status: r13[r13.length - 1].get("status"),
         dos: r13[r13.length - 1].get("Timestamp"),
         file: r13[r13.length - 1].get("file"),
         link: r13[r13.length - 1].get("link"),
@@ -323,15 +311,14 @@ exports.getTask = async (email) => {
 
     if (t14rows.length > 0) {
       r14 = t14rows.filter((row) =>
-        row
-          .get("email").toLowerCase()
-          .includes(email.toLowerCase())
+        row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
     if (r14.length > 0) {
       jsonData = {
         email: email,
         name: r14[r14.length - 1].get("names"),
+        status: r14[r14.length - 1].get("status"),
         dos: r14[r14.length - 1].get("Timestamp"),
         file: r14[r14.length - 1].get("file"),
         link: r14[r14.length - 1].get("link"),
@@ -340,6 +327,49 @@ exports.getTask = async (email) => {
     }
 
     return tasks;
+  } catch (error) {
+    console.error("Error adding rows:", error);
+    throw error;
+  }
+};
+function convertString(inputString) {
+  // Use a regular expression to match the numeric part at the end of the string
+  var match = inputString.match(/\d+$/);
+
+  // Check if a match is found
+  if (match) {
+    // Extract the numeric part
+    var numericPart = match[0];
+
+    // Create the new string with "Task_" prefix and the numeric part
+    var outputString = "Task_" + numericPart;
+
+    // Return the result
+    return outputString;
+  }
+
+  // If no match is found, return the original string
+  return inputString;
+}
+exports.updateTask = async (email, sheetname, status) => {
+  try {
+    await doc.loadInfo();
+    // console.log(convertString(sheetname));
+    let t1 = doc.sheetsByTitle[convertString(sheetname)];
+    // console.log(t1)
+    const t1rows = await t1.getRows();
+    // console.log(t1rows)
+    var r1 = [];
+
+    if (t1rows.length > 0) {
+      r1 = t1rows.filter((row) =>
+        row.get("email").toLowerCase().includes(email.toLowerCase())
+      );
+    }
+
+    r1[r1.length - 1].assign({ status: status });
+    await r1[r1.length - 1].save();
+    return "done";
   } catch (error) {
     console.error("Error adding rows:", error);
     throw error;
