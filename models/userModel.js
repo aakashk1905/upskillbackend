@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
   },
   closed: {
     type: Number,
-    defaul:0
+    defaul: 0,
   },
   level: {
     type: String,
@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema({
         default: Date.now,
       },
     ],
+  },
+  role: {
+    type: String,
+    default: "user",
   },
   resetPasswordToken: String,
   resetPasswordExpire: Date,
