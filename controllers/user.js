@@ -13,7 +13,7 @@ const {
 } = require("../services/userService");
 
 exports.registerUser = async (req, res) => {
-  const { name, email, password, mobile } = req.body;
+  const { name, email, password, mobile, mern } = req.body;
 
   try {
     const newUser = await User.create({
@@ -22,6 +22,13 @@ exports.registerUser = async (req, res) => {
       password,
       mobile,
     });
+    if (mern) {
+      try {
+        await sendNewUser(number);
+      } catch (e) {
+        console.log(e);
+      }
+    }
     return res.status(200).json({
       success: true,
       newUser,
@@ -213,6 +220,7 @@ exports.regtop = async (req, res) => {
 
   try {
     await sendNewOtp(number, otp);
+    console.log(otp);
     res.status(200).json({
       success: true,
       key: newOtp,
@@ -287,6 +295,36 @@ exports.reset = async (req, res) => {
   });
 };
 
+const sendNewUser = async (number) => {
+  try {
+    const response = await fetch("https://api.interakt.ai/v1/public/message/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic MGRiYUtNMDNSRlFteUJ2VGJTSkVzTVhBNnl6X2sxX2phc2JldjU3OWhSUTo=",
+      },
+      body: JSON.stringify({
+        countryCode: "+91",
+        phoneNumber: number,
+        type: "Template",
+        template: {
+          name: "mern_onboard_msg",
+          languageCode: "en",
+          bodyValues: [otp],
+          headerValues: [
+            "https://s3.ap-south-1.amazonaws.com/upskillmafia.com/onboard.mp4",
+          ],
+        },
+      }),
+    });
+
+    if (!response.ok) throw new Error("Something went Wrong");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
 const sendNewOtp = async (number, otp) => {
   try {
     const response = await fetch("https://api.interakt.ai/v1/public/message/", {
