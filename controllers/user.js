@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
     });
     if (mern) {
       try {
-        console.log("Hiii");
+        // console.log("Hiii");
         await sendNewUser(mobile);
       } catch (e) {
         console.log(e);
@@ -221,7 +221,7 @@ exports.regtop = async (req, res) => {
 
   try {
     await sendNewOtp(number, otp);
-    console.log(otp);
+    // console.log(otp);
     res.status(200).json({
       success: true,
       key: newOtp,
@@ -297,7 +297,7 @@ exports.reset = async (req, res) => {
 };
 
 const sendNewUser = async (number) => {
-  console.log(number);
+  // console.log(number);
   try {
     const response = await fetch("https://api.interakt.ai/v1/public/message/", {
       method: "POST",
