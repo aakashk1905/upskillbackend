@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
     });
     if (mern) {
       try {
-        await sendNewUser(number);
+        await sendNewUser(mobile);
       } catch (e) {
         console.log(e);
       }
