@@ -10,13 +10,15 @@ const {
   updateStreak,
   gettaskbymail,
   getAll,
-  updatetaskbymail
+  updatetaskbymail,
+  regtop
 } = require("../controllers/user");
 const router = express.Router();
 
 router.route("/user/register").post(registerUser);
 router.route("/user/login").post(loginUser);
 router.route("/user/forgot").post(forgot);
+router.route("/user/regotp").post(regtop);
 router.route("/user/reset").post(reset);
 router.route("/user/getuser").get(getUser);
 router.route("/user/all").get(getAll);

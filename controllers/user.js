@@ -1,13 +1,14 @@
 const User = require("../models/userModel");
 const dotenv = require("dotenv");
 dotenv.config({ path: "./config/config.env" });
+const crypto = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const {
   joined,
   closed,
   updateStreak,
   gettaskbymail,
-  // updateStreakAll,
+
   updatetaskbymail,
 } = require("../services/userService");
 
@@ -25,17 +26,14 @@ exports.registerUser = async (req, res) => {
       success: true,
       newUser,
     });
-    // return res.status(201).json({ success: true, newUser });
   } catch (err) {
     if (err.code === 11000 && err.keyPattern && err.keyPattern.mobile) {
-      // Duplicate key error for the 'mobile' field
       return res.status(400).json({
         success: false,
         error:
           "Mobile number already exists. Please use a different mobile number.",
       });
     } else if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
-      // Duplicate key error for the 'mobile' field
       return res.status(400).json({
         success: false,
         error: "Email ID already exists. Please use a different Email.",
@@ -94,7 +92,7 @@ exports.updatetaskbymail = async (req, res) => {
   const email = req.query.email;
   const sheetname = req.query.sheetname;
   const status = req.query.status;
-  updatetaskbymail(email,sheetname,status)
+  updatetaskbymail(email, sheetname, status)
     .then((data) => res.status(200).json({ success: true, tasks: data }))
     .catch((err) => {
       res.status(500).json({ success: false, error: err.message });
@@ -172,7 +170,61 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Forgot user
+// Function to encrypt data
+function encryptData(data, key) {
+  return crypto.AES.encrypt(String(data), key).toString();
+}
+
+function decryptData(encryptedData, key) {
+  const bytes = crypto.AES.decrypt(encryptedData, key);
+
+  const decryptedData = bytes.toString(crypto.enc.Utf8);
+  // console.log("hiii", decryptedData);
+  return decryptedData;
+}
+
+// new user otp
+exports.regtop = async (req, res) => {
+  const number = req.query.number;
+  const oldotp = req.body.otpsent;
+  const key = "justEncryptOtpAndSendEOeo12@#";
+  // console.log(req.body, oldotp);
+  if (oldotp) {
+    try {
+      const restotp = decryptData(oldotp, key);
+
+      await sendNewOtp(number, restotp);
+      return res.status(200).json({
+        success: true,
+        key: oldotp,
+        message: "Otp Resent to Whatsapp",
+      });
+    } catch (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Something Went Wrong please try again",
+      });
+    }
+  }
+
+  // generate otp
+  const otp = Math.floor(Math.random() * 9000) + 1000;
+  const newOtp = encryptData(otp, key);
+
+  try {
+    await sendNewOtp(number, otp);
+    res.status(200).json({
+      success: true,
+      key: newOtp,
+      message: "Otp Sent to Whatsapp",
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "Something Went Wrong please try again",
+    });
+  }
+};
 exports.forgot = async (req, res) => {
   const number = req.query.number;
 
@@ -235,6 +287,33 @@ exports.reset = async (req, res) => {
   });
 };
 
+const sendNewOtp = async (number, otp) => {
+  try {
+    const response = await fetch("https://api.interakt.ai/v1/public/message/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic MGRiYUtNMDNSRlFteUJ2VGJTSkVzTVhBNnl6X2sxX2phc2JldjU3OWhSUTo=",
+      },
+      body: JSON.stringify({
+        countryCode: "+91",
+        phoneNumber: number,
+        type: "Template",
+        template: {
+          name: "new_otp",
+          languageCode: "en",
+          bodyValues: [otp],
+        },
+      }),
+    });
+
+    if (!response.ok) throw new Error("Something went Wrong");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
 const sendOtp = async (number, otp) => {
   try {
     const response = await fetch("https://api.interakt.ai/v1/public/message/", {

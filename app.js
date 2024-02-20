@@ -13,5 +13,7 @@ const user = require("./routes/userRoutes");
 app.use("/api/v1", user);
 const push = require("./routes/pushRoutes");
 app.use("/api/v1", push);
+const submission = require("./routes/submissionRoutes");
+app.use("/api/v1", submission);
 
 module.exports = app;
