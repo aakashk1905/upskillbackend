@@ -24,6 +24,7 @@ exports.registerUser = async (req, res) => {
     });
     if (mern) {
       try {
+        console.log("Hiii");
         await sendNewUser(mobile);
       } catch (e) {
         console.log(e);
@@ -296,6 +297,7 @@ exports.reset = async (req, res) => {
 };
 
 const sendNewUser = async (number) => {
+  console.log(number);
   try {
     const response = await fetch("https://api.interakt.ai/v1/public/message/", {
       method: "POST",
@@ -311,7 +313,6 @@ const sendNewUser = async (number) => {
         template: {
           name: "mern_onboard_msg",
           languageCode: "en",
-          bodyValues: [otp],
           headerValues: [
             "https://s3.ap-south-1.amazonaws.com/upskillmafia.com/onboard.mp4",
           ],
