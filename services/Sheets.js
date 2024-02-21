@@ -27,7 +27,7 @@ exports.getTask = async (email) => {
         row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
-    // console.log(r1[r1.length - 1]);
+
     if (r1.length > 0) {
       const task1 = {
         email: email,

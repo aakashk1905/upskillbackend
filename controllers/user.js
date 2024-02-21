@@ -11,20 +11,67 @@ const {
 
   updatetaskbymail,
 } = require("../services/userService");
+const UserDetails = require("../models/userDetailsModel");
 
+// exports.migrateUser = async (req, res) => {
+//   try {
+//     for (const ur of userr) {
+//       const userDetailsData = {
+//         streakData: {
+//           streak: ur.streakData.streak,
+//           streakDates: ur.streakData.streakDates.map(
+//             (dateObj) => new Date(dateObj.$date)
+//           ),
+//         },
+//         email: ur.email,
+//       };
+//       const details = await UserDetails.create(userDetailsData);
+
+//       await User.create({
+//         name: ur.name,
+//         email: ur.email,
+//         password: ur.password,
+//         mobile: ur.mobile,
+//         userDetails: details._id,
+//       });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       message: "Migration completed successfully.",
+//     });
+//   } catch (err) {
+//     if (err.code === 11000 && err.keyPattern && err.keyPattern.mobile) {
+//       return res.status(400).json({
+//         success: false,
+//         error:
+//           "Mobile number already exists. Please use a different mobile number.",
+//       });
+//     } else if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
+//       return res.status(400).json({
+//         success: false,
+//         error: "Email ID already exists. Please use a different Email.",
+//       });
+//     } else {
+//       // Other errors
+//       return res.status(500).json({ success: false, error: err.message });
+//     }
+//   }
+// };
 exports.registerUser = async (req, res) => {
   const { name, email, password, mobile, mern } = req.body;
 
   try {
+    const details = await UserDetails.create(req.body);
     const newUser = await User.create({
       name,
       email,
       password,
       mobile,
+      userDetails: details._id,
     });
     if (mern) {
       try {
-        // console.log("Hiii");
         await sendNewUser(mobile);
       } catch (e) {
         console.log(e);
@@ -56,7 +103,7 @@ exports.registerUser = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const email = req.query.email;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).populate("userDetails");
     res.status(200).json({ success: true, userGot: user });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -64,7 +111,7 @@ exports.getUser = async (req, res) => {
 };
 exports.getAll = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("userDetails");
     res.status(200).json({ success: true, total: users.length, users: users });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
@@ -130,7 +177,9 @@ exports.loginUser = async (req, res) => {
           message: "Something Went Wrong Please Try Again",
         });
 
-      const user = await User.findOne({ email: decode.email });
+      const user = await User.findOne({ email: decode.email }).populate(
+        "userDetails"
+      );
       if (!user) {
         return res.status(401).json({
           success: false,
@@ -150,7 +199,9 @@ exports.loginUser = async (req, res) => {
     }
 
     // 2. Check if user exists
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email })
+      .populate("userDetails")
+      .select("+password");
 
     if (!user) {
       return res
@@ -275,7 +326,7 @@ exports.reset = async (req, res) => {
   const user = await User.findOne({
     resetPasswordToken: otp,
     resetPasswordExpire: { $gt: new Date() },
-  });
+  }).populate("userDetails");
   // console.log(user);
   if (!user) {
     return res.status(401).json({

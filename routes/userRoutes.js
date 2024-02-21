@@ -11,11 +11,13 @@ const {
   gettaskbymail,
   getAll,
   updatetaskbymail,
-  regtop
+  regtop,
+  // migrateUser
 } = require("../controllers/user");
 const router = express.Router();
 
 router.route("/user/register").post(registerUser);
+// router.route("/user/migrate").post(migrateUser);
 router.route("/user/login").post(loginUser);
 router.route("/user/forgot").post(forgot);
 router.route("/user/regotp").post(regtop);
