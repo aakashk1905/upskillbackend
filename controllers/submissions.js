@@ -54,7 +54,6 @@ exports.submitTask = async (req, res) => {
 
         try {
           await old.save();
-          //   console.log("Save successful");
         } catch (error) {
           console.error("Save failed:", error);
         }
@@ -156,12 +155,12 @@ exports.feedback = async (req, res) => {
     }
 
     if (status === "approved") {
-      const user = await User.findOne({ email });
-      let pts = user.points || 0;
+      const user = await User.findOne({ email }).populate("userDetails");
+      let pts = user.userDetails.points || 0;
       pts += upgrade[taskName];
-      user.points = pts;
+      user.userDetails.points = pts;
       try {
-        await user.save();
+        await user.userDetails.save();
       } catch (error) {
         console.error("Save failed:", error);
       }

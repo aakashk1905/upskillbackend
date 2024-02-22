@@ -19,7 +19,7 @@ const userDetailsSchema = new mongoose.Schema({
   },
   level: {
     type: String,
-    default: "Freshi",
+    default: "Bronze III",
   },
   points: {
     type: Number,

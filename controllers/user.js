@@ -12,8 +12,8 @@ const {
   updatetaskbymail,
 } = require("../services/userService");
 const UserDetails = require("../models/userDetailsModel");
-
-// exports.migrateUser = async (req, res) => {
+// const userr = require("../test.users.json");
+// migrateUser = async (req, res) => {
 //   try {
 //     for (const ur of userr) {
 //       const userDetailsData = {
@@ -35,7 +35,7 @@ const UserDetails = require("../models/userDetailsModel");
 //         userDetails: details._id,
 //       });
 //     }
-
+//     console.log("done");
 //     return res.status(200).json({
 //       success: true,
 //       message: "Migration completed successfully.",
@@ -58,6 +58,7 @@ const UserDetails = require("../models/userDetailsModel");
 //     }
 //   }
 // };
+
 exports.registerUser = async (req, res) => {
   const { name, email, password, mobile, mern } = req.body;
 

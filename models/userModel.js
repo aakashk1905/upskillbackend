@@ -143,6 +143,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "user",
   },
+  lastLogin: {
+    type: Date,
+    default: new Date(),
+  },
   userDetails: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "UserDetails",
@@ -151,12 +155,12 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpire: Date,
 });
 
-// userSchema.pre("save", async function (next) {
-//   if (!this.isModified("password")) {
-//     next();
-//   }
-//   this.password = await bcrypt.hash(this.password, 10);
-// });
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  this.password = await bcrypt.hash(this.password, 10);
+});
 
 // JSON WEB TOKEN
 userSchema.methods.getJWTToken = function () {
