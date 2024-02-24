@@ -29,6 +29,9 @@ const userDetailsSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  lastSubmission: {
+    type: Date,
+  },
 });
 
 const UserDetails = mongoose.model("UserDetails", userDetailsSchema);

@@ -1,4 +1,5 @@
 const Submission = require("../models/submissionModel");
+const UserDetails = require("../models/userDetailsModel");
 const User = require("../models/userModel");
 
 exports.submitTask = async (req, res) => {
@@ -11,71 +12,51 @@ exports.submitTask = async (req, res) => {
   }
 
   try {
-    const old = await Submission.findOne({ email });
-    if (!old) {
-      const submission = new Submission({
-        email,
-        tasks: [
-          {
-            taskName,
-            taskLink,
-            status: "submitted",
-            feedback: "",
-          },
-        ],
-      });
+    let submission = await Submission.findOne({ email });
+    let userDetails = await UserDetails.findOne({ email });
 
-      await submission.save();
-      return res.status(200).json({
-        success: true,
-        message: "Task Submitted successfully",
-      });
-    } else {
-      const existingSubmission = old.tasks.findIndex(
-        (task) => task.taskName === taskName
-      );
+    if (!submission) {
+      submission = new Submission({ email });
+    }
 
-      if (existingSubmission > -1) {
-        if (old.tasks[existingSubmission].status === "approved") {
-          old.tasks[existingSubmission] = {
-            taskName,
-            taskLink,
-            status: "approved",
-            feedback: "",
-          };
-        } else {
-          old.tasks[existingSubmission] = {
-            taskName,
-            taskLink,
-            status: "submitted",
-            feedback: "",
-          };
-        }
+    const existingTaskIndex = submission.tasks.findIndex(
+      (task) => task.taskName === taskName
+    );
 
-        try {
-          await old.save();
-        } catch (error) {
-          console.error("Save failed:", error);
-        }
+    const currentDate = new Date();
 
-        return res.status(200).json({
-          success: true,
-          message: "Task Resubmitted successfully",
-        });
-      }
-
-      old.tasks.push({
+    if (existingTaskIndex !== -1) {
+      submission.tasks[existingTaskIndex] = {
         taskName,
         taskLink,
         status: "submitted",
         feedback: "",
-      });
-      await old.save();
-      return res.status(200).json({
-        success: true,
-        message: "Task Submitted Successfully",
+        submittedOn: currentDate,
+      };
+    } else {
+      submission.tasks.push({
+        taskName,
+        taskLink,
+        status: "submitted",
+        feedback: "",
+        submittedOn: currentDate,
       });
     }
+
+    if (userDetails) {
+      userDetails.lastSubmission = currentDate;
+      await userDetails.save();
+    }
+
+    await submission.save();
+
+    return res.status(200).json({
+      success: true,
+      message:
+        existingTaskIndex !== -1
+          ? "Task Resubmitted successfully"
+          : "Task Submitted successfully",
+    });
   } catch (err) {
     if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
       return res.status(400).json({
@@ -141,41 +122,58 @@ exports.feedback = async (req, res) => {
         message: "No Task With This Task Name",
       });
     }
-    const updated = submission.tasks[idx];
+    const updatedTask = submission.tasks[idx];
 
-    updated.status = status;
-    updated.feedback = feedback;
-    submission.tasks[idx] = updated;
+    updatedTask.status = status;
+    updatedTask.feedback = feedback;
+    submission.tasks[idx] = updatedTask;
 
-    try {
-      await submission.save();
-      console.log("Done");
-    } catch (error) {
-      console.error("Save failed:", error);
-    }
+    await submission.save();
 
     if (status === "approved") {
       const user = await User.findOne({ email }).populate("userDetails");
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
       let pts = user.userDetails.points || 0;
       pts += upgrade[taskName];
       user.userDetails.points = pts;
-      try {
-        await user.userDetails.save();
-      } catch (error) {
-        console.error("Save failed:", error);
-      }
+      await user.userDetails.save();
     }
-    return res.status(200).json({ success: true, msg: "testing" });
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Feedback updated successfully" });
   } catch (err) {
     return res.status(500).json({ success: false, error: err.message });
   }
 };
-
 exports.getSubmissionsBymail = async (req, res) => {
   try {
     const email = req.query.email;
     const submissions = await Submission.findOne({ email });
     res.status(200).json({ success: true, submissions });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+exports.unchecked = async (req, res) => {
+  try {
+    const submissions = await Submission.find({ "tasks.status": "submitted" });
+
+    // Filter out tasks with status 'approved' from each submission
+    const filteredSubmissions = submissions.map((submission) => {
+      submission.tasks = submission.tasks.filter(
+        (task) => task.status !== "approved" && task.status !== "rejected"
+      );
+      return submission;
+    });
+
+    res.status(200).json({ success: true, submissions: filteredSubmissions });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
