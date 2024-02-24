@@ -2,6 +2,117 @@ const Submission = require("../models/submissionModel");
 const UserDetails = require("../models/userDetailsModel");
 const User = require("../models/userModel");
 
+const levels = [
+  {
+    name: "Bronze III",
+    start: 0,
+    end: 49,
+  },
+  {
+    name: "Bronze II",
+    start: 50,
+    end: 99,
+  },
+  {
+    name: "Bronze I",
+    start: 100,
+    end: 199,
+  },
+  {
+    name: "Silver III",
+    start: 200,
+    end: 299,
+  },
+  {
+    name: "Silver II",
+    start: 300,
+    end: 449,
+  },
+  {
+    name: "Silver I",
+    start: 450,
+    end: 599,
+  },
+  {
+    name: "Gold III",
+    start: 600,
+    end: 799,
+  },
+  {
+    name: "Gold II",
+    start: 800,
+    end: 999,
+  },
+  {
+    name: "Gold I",
+    start: 1000,
+    end: 1249,
+  },
+  {
+    name: "Platinum III",
+    start: 1250,
+    end: 1499,
+  },
+  {
+    name: "Platinum II",
+    start: 1500,
+    end: 1799,
+  },
+  {
+    name: "Platinum I",
+    start: 1800,
+    end: 2099,
+  },
+  {
+    name: "Diamond III",
+    start: 2100,
+    end: 2499,
+  },
+  {
+    name: "Diamond II",
+    start: 2500,
+    end: 2999,
+  },
+  {
+    name: "Diamond I",
+    start: 3000,
+    end: 3499,
+  },
+  {
+    name: "Emerald",
+    start: 3500,
+    end: 3999,
+  },
+];
+
+const upgrade = {
+  task1: 10,
+  task2: 10,
+  task3: 10,
+  task4: 20,
+  task5: 20,
+  task6: 20,
+  task7: 30,
+  task8: 20,
+  task9: 20,
+  task10: 20,
+  task11: 30,
+  task12: 30,
+  task13: 40,
+  task14: 40,
+  task15: 50,
+  task16: 70,
+  task17: 100,
+  task18: 70,
+  task19: 200,
+  task20: 150,
+  task21: 150,
+  task22: 150,
+  grpproject1: 60,
+  grpproject2: 150,
+  grpproject3: 200,
+  grpproject4: 400,
+};
 exports.submitTask = async (req, res) => {
   const { email, taskName, taskLink } = req.body;
 
@@ -71,34 +182,7 @@ exports.submitTask = async (req, res) => {
 
 exports.feedback = async (req, res) => {
   const { email, feedback, status, taskName } = req.body;
-  const upgrade = {
-    task1: 10,
-    task2: 10,
-    task3: 10,
-    task4: 10,
-    task5: 10,
-    task6: 10,
-    task7: 10,
-    task8: 10,
-    task9: 10,
-    task10: 10,
-    task11: 10,
-    task12: 10,
-    task13: 10,
-    task14: 10,
-    task15: 10,
-    task16: 10,
-    task17: 10,
-    task18: 10,
-    task19: 10,
-    task20: 10,
-    task21: 10,
-    task22: 10,
-    grouptask1: 40,
-    grouptask2: 50,
-    grouptask3: 60,
-    grouptask4: 70,
-  };
+
   if (!email || !taskName) {
     return res.status(400).json({
       message: "Missing required fields: email, taskName",
@@ -139,7 +223,11 @@ exports.feedback = async (req, res) => {
         });
       }
       let pts = user.userDetails.points || 0;
+
       pts += upgrade[taskName];
+      const ind = levels.findIndex((l) => l.end >= pts && l.start <= pts);
+
+      user.userDetails.level = levels[ind].name;
       user.userDetails.points = pts;
       await user.userDetails.save();
     }
