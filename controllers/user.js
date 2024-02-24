@@ -10,8 +10,10 @@ const {
   gettaskbymail,
 
   updatetaskbymail,
+  getLeaderboard,
 } = require("../services/userService");
 const UserDetails = require("../models/userDetailsModel");
+const moment = require("moment-timezone");
 // const userr = require("../test.users.json");
 // migrateUser = async (req, res) => {
 //   try {
@@ -144,6 +146,18 @@ exports.gettaskbymail = async (req, res) => {
       res.status(500).json({ success: false, error: err.message });
     });
 };
+exports.getLeaderboard = async (req, res) => {
+  const email = req.query.email;
+  getLeaderboard(email)
+    .then((data) => {
+      res
+        .status(200)
+        .json({ success: true, leaderboard: data.lb, myRank: data.myRank });
+    })
+    .catch((err) => {
+      res.status(500).json({ success: false, error: err.message });
+    });
+};
 exports.updatetaskbymail = async (req, res) => {
   const email = req.query.email;
   const sheetname = req.query.sheetname;
@@ -225,6 +239,27 @@ exports.loginUser = async (req, res) => {
       success: true,
       user,
     });
+  } catch (err) {
+    return res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.lastlogin = async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "No User found",
+      });
+    }
+    user.lastLogin = moment().tz("Asia/Kolkata").format();
+    await user.save();
+    return res
+      .status(200)
+      .json({ success: true, message: "Last Login Updated" });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }

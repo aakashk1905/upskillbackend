@@ -223,6 +223,52 @@ exports.gettaskbymail = (email) => {
       });
   });
 };
+exports.getLeaderboard = async (email) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const leaderboard = await userModel.aggregate([
+        {
+          $lookup: {
+            from: "userdetails",
+            localField: "email",
+            foreignField: "email",
+            as: "userDetails",
+          },
+        },
+        {
+          $unwind: "$userDetails",
+        },
+        {
+          $sort: { "userDetails.points": -1 },
+        },
+      ]);
+      const userEntry = leaderboard.findIndex((lb) => lb.email === email);
+      const dt = {
+        lb: leaderboard.slice(0, 10),
+        myRank: userEntry,
+      };
+      resolve(dt);
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+// exports.getLeaderboard = async (email) => {
+//   return new Promise((resolve, reject) => {
+//     userModel
+//     .find()
+//     .populate("userDetails")
+//     .sort({ "userDetails.points": -1 }).then((data) => {
+//         for (let i = 0; i < 10; i++) {
+//           console.log(data[i]);
+//         }
+//         resolve(data.slice(0, 10));
+//       })
+//       .catch((err) => {
+//         reject(err);
+//       });
+//   });
+// };
 exports.updatetaskbymail = (email, sheetname, status) => {
   return new Promise((resolve, reject) => {
     updateTask(email, sheetname, status)

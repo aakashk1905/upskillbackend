@@ -12,6 +12,8 @@ const {
   getAll,
   updatetaskbymail,
   regtop,
+  getLeaderboard,
+  lastlogin,
   // migrateUser
 } = require("../controllers/user");
 const router = express.Router();
@@ -19,6 +21,7 @@ const router = express.Router();
 router.route("/user/register").post(registerUser);
 // router.route("/user/migrate").post(migrateUser);
 router.route("/user/login").post(loginUser);
+router.route("/user/lastlogin").put(lastlogin);
 router.route("/user/forgot").post(forgot);
 router.route("/user/regotp").post(regtop);
 router.route("/user/reset").post(reset);
@@ -28,6 +31,7 @@ router.route("/user/joined").post(joined);
 router.route("/user/closed").post(closed);
 router.route("/user/update-streak").post(updateStreak);
 router.route("/user/gettaskbymail").get(gettaskbymail);
+router.route("/user/leaderboard").get(getLeaderboard);
 router.route("/user/updatetaskbymail").post(updatetaskbymail);
 
 module.exports = router;

@@ -100,6 +100,7 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const moment = require("moment-timezone");
 
 //config
 dotenv.config({ path: "Backend/config/config.env" });
@@ -144,8 +145,8 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
   lastLogin: {
-    type: Date,
-    default: new Date(),
+    type: String,
+    default: () => moment().tz("Asia/Kolkata").format(),
   },
   userDetails: {
     type: mongoose.Schema.Types.ObjectId,
