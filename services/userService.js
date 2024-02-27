@@ -157,7 +157,7 @@ exports.updateStreak = (email) => {
         }
 
         const streakDates = user.userDetails.streakData.streakDates;
-        const ls = user.userDetails.streakData.longestStreak || 0;
+        var ls = user.userDetails.streakData.longestStreak || 0;
 
         if (
           !streakDates ||
