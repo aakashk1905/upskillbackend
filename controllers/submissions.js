@@ -404,19 +404,40 @@ exports.getSubmissionsBymail = async (req, res) => {
   }
 };
 
+// exports.unchecked = async (req, res) => {
+//   try {
+//     const submissions = await Submission.find({ "tasks.status": "submitted" });
+
+//     const filteredSubmissions = submissions.map((submission) => {
+//       submission.tasks = submission.tasks.filter(
+//         (task) => task.status !== "approved" && task.status !== "rejected"
+//       );
+//       return submission;
+//     });
+
+//     res.status(200).json({ success: true, submissions: filteredSubmissions });
+//   } catch (err) {
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// };
+
 exports.unchecked = async (req, res) => {
   try {
     const submissions = await Submission.find({ "tasks.status": "submitted" });
 
-    // Filter out tasks with status 'approved' from each submission
-    const filteredSubmissions = submissions.map((submission) => {
-      submission.tasks = submission.tasks.filter(
-        (task) => task.status !== "approved" && task.status !== "rejected"
+    // Flatten the array of tasks from all submissions
+    let tasks = submissions.reduce((accumulator, submission) => {
+      return accumulator.concat(
+        submission.tasks
+          .filter((task) => task.status === "submitted")
+          .map((task) => ({ ...task.toObject(), email: submission.email }))
       );
-      return submission;
-    });
+    }, []);
 
-    res.status(200).json({ success: true, submissions: filteredSubmissions });
+    // Sort tasks based on submitted date, with the latest date first
+    tasks.sort((a, b) => new Date(b.submittedOn) - new Date(a.submittedOn));
+
+    res.status(200).json({ success: true, tasks });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
