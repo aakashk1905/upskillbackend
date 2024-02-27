@@ -11,7 +11,10 @@ const userDetailsSchema = new mongoose.Schema({
       required: true,
       default: 0,
     },
-    longestStreak: Number,
+    longestStreak: {
+      type: Number,
+      default: 0,
+    },
     streakDates: [
       {
         type: Date,
