@@ -121,22 +121,19 @@ exports.registerUser = async (req, res) => {
   try {
     let newUser;
 
-    // Check if the user already exists
     let existingUser = await User.findOne({ email });
 
     // If the user exists, update the details
     if (existingUser) {
-      newUser = await User.findOneAndUpdate(
-        { email },
-        {
-          name,
-          password,
-          mobile,
-        },
-        { new: true } // return the updated document
-      );
+      existingUser.mobile = mobile;
+      existingUser.password = password;
+      existingUser.name = name;
+      await existingUser.save();
+      return res.status(200).json({
+        success: true,
+        newUser: existingUser,
+      });
     } else {
-      // Create a new user
       const details = await UserDetails.create(req.body);
       newUser = await User.create({
         name,
@@ -255,7 +252,7 @@ exports.updateStreak = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   const { email, password, credential } = req.body;
-  //console.log(email, password);
+  console.log(email, password);
   try {
     if (credential && credential !== "") {
       const decode = jwt.decode(credential.credential);
