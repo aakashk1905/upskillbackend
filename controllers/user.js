@@ -61,18 +61,92 @@ const moment = require("moment-timezone");
 //   }
 // };
 
+// const registerUser = async (u) => {
+//   const { name, email, password, mobile, mern } = u;
+
+//   try {
+//     let newUser;
+//     // Check if the user already exists
+//     let existingUser = await User.findOne({ email });
+
+//     // If the user exists, update the details
+//     if (existingUser) {
+//       console.log(`user already exists ${email}`);
+//       return;
+//       // newUser = await User.findOneAndUpdate(
+//       //   { email },
+//       //   {
+//       //     name,
+//       //     email,
+//       //     password,
+//       //     mobile,
+//       //   },
+//       //   { new: true } // return the updated document
+//       // );
+//     } else {
+//       // Create a new user
+//       const details = await UserDetails.create({ points: 30, email });
+//       newUser = await User.create({
+//         name,
+//         email,
+//         password,
+//         mobile,
+//         userDetails: details._id,
+//       });
+//     }
+//     console.log(`User registered: ${newUser}`);
+//   } catch (err) {
+//     if (err.code === 11000 && err.keyPattern && err.keyPattern.mobile) {
+//       console.log(`Error registering user: ${err.message}`);
+//     } else if (err.code === 11000 && err.keyPattern && err.keyPattern.email) {
+//       console.log(`Error registering user: ${err.message}`);
+//     } else {
+//       console.log(`Error registering user: ${err.message}`);
+//     }
+//   }
+// };
+
+// const user = require("../userdata.json");
+// const registerAllUsers = async () => {
+//   for (const u of user) {
+//     await registerUser(u);
+//   }
+// };
+
+// registerAllUsers();
+
 exports.registerUser = async (req, res) => {
   const { name, email, password, mobile, mern } = req.body;
 
   try {
-    const details = await UserDetails.create(req.body);
-    const newUser = await User.create({
-      name,
-      email,
-      password,
-      mobile,
-      userDetails: details._id,
-    });
+    let newUser;
+
+    // Check if the user already exists
+    let existingUser = await User.findOne({ email });
+
+    // If the user exists, update the details
+    if (existingUser) {
+      newUser = await User.findOneAndUpdate(
+        { email },
+        {
+          name,
+          password,
+          mobile,
+        },
+        { new: true } // return the updated document
+      );
+    } else {
+      // Create a new user
+      const details = await UserDetails.create(req.body);
+      newUser = await User.create({
+        name,
+        email,
+        password,
+        mobile,
+        userDetails: details._id,
+      });
+    }
+
     if (mern) {
       try {
         await sendNewUser(mobile);

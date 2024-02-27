@@ -8,9 +8,13 @@ const serviceAccountAuth = new JWT({
 });
 
 const doc = new GoogleSpreadsheet(
-  "1yImtECDCr5T0ULotNYiTiyVp3gpWyZd2nSBMysZsVvE",
+  "1RY2mvRhVIoal9o8jgbJVV3gODlB34_9X_8GodYx8TfM",
   serviceAccountAuth
 );
+// const doc = new GoogleSpreadsheet(
+//   "1yImtECDCr5T0ULotNYiTiyVp3gpWyZd2nSBMysZsVvE",
+//   serviceAccountAuth
+// );
 
 exports.getTask = async (email) => {
   try {
@@ -50,7 +54,7 @@ exports.getTask = async (email) => {
         row.get("email").toLowerCase().includes(email.toLowerCase())
       );
     }
-    // console.log(r2);
+
     if (r2.length > 0) {
       jsonData = {
         email: email,
@@ -354,11 +358,9 @@ function convertString(inputString) {
 exports.updateTask = async (email, sheetname, status) => {
   try {
     await doc.loadInfo();
-    // console.log(convertString(sheetname));
+
     let t1 = doc.sheetsByTitle[convertString(sheetname)];
-    // console.log(t1)
     const t1rows = await t1.getRows();
-    // console.log(t1rows)
     var r1 = [];
 
     if (t1rows.length > 0) {
@@ -375,3 +377,92 @@ exports.updateTask = async (email, sheetname, status) => {
     throw error;
   }
 };
+
+// const fs = require("fs");
+
+// const getUserss = async () => {
+//   try {
+//     await doc.loadInfo();
+
+//     let allData = []; // Array to store all sheet data
+
+//     for (const sheet of doc.sheetsByIndex) {
+//       await sheet.loadCells();
+//       const rows = await sheet.getRows();
+
+//       // Iterate over each row and extract data
+//       rows.forEach((row) => {
+//         let name = row._rawData[1]; // Column B
+//         console.log(row._rawData[1]);
+//         let email = row._rawData[2]; // Column C
+//         let number = row._rawData[3]; // Column D
+
+//         // Create JSON object and push to allData array
+//         let user = {
+//           name: name,
+//           email: email,
+//           number: number,
+//           password: "Upskillmafia",
+//         };
+//         allData.push(user);
+//       });
+//     }
+
+//     // Write data to JSON file
+//     fs.writeFileSync("./userdata.json", JSON.stringify(allData, null, 2));
+
+//     console.log("Data written to userdata.json successfully.");
+//   } catch (error) {
+//     console.error("Error retrieving data:", error);
+//     throw error;
+//   }
+// };
+
+// // getUserss();
+
+// const fs = require("fs");
+
+// const getUserss = async () => {
+//   try {
+//     await doc.loadInfo();
+
+//     let allSubmissions = []; // Array to store all submissions
+
+//     for (const sheet of doc.sheetsByIndex) {
+//       await sheet.loadCells();
+
+//       const sheetName = sheet.title;
+//       const rows = await sheet.getRows();
+
+//       // Iterate over each row and extract data
+//       rows.forEach((row) => {
+//         let email = row._rawData[2]; // Column C
+//         let taskLink = row._rawData[4]; // Column E
+//         let submittedOn = row._rawData[0]; // Column A
+//         console.log(email,sheetName)
+
+//         // Create submission object and push to allSubmissions array
+//         let submission = {
+//           email: email,
+//           taskLink: taskLink,
+//           taskName: sheetName, // Using sheet name as task name
+//           submittedOn: submittedOn,
+//         };
+//         allSubmissions.push(submission);
+//       });
+//     }
+
+//     // Write data to JSON file
+//     fs.writeFileSync(
+//       "./submissions.json",
+//       JSON.stringify(allSubmissions, null, 2)
+//     );
+
+//     console.log("Data written to submissions.json successfully.");
+//   } catch (error) {
+//     console.error("Error retrieving data:", error);
+//     throw error;
+//   }
+// };
+
+// getUserss();

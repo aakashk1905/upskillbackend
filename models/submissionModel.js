@@ -42,6 +42,8 @@ const submission = new mongoose.Schema({
         default: "submitted",
       },
       feedback: String,
+      teamName: String,
+      teamMembers: [{ type: String }],
       submittedOn: {
         type: Date,
         default: Date.now,
