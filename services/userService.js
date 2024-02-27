@@ -157,6 +157,7 @@ exports.updateStreak = (email) => {
         }
 
         const streakDates = user.userDetails.streakData.streakDates;
+        const ls = user.userDetails.streakData.longestStreak || 0;
 
         if (
           !streakDates ||
@@ -193,6 +194,8 @@ exports.updateStreak = (email) => {
             }
           }
         }
+        ls = Math.max(ls, user.userDetails.streakData.streak);
+        user.userDetails.streakData.longestStreak = ls;
         if (streakDates.length > 31) {
           streakDates.shift();
         }
