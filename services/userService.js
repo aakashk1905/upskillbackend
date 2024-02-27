@@ -239,7 +239,7 @@ exports.getLeaderboard = async (email) => {
           $unwind: "$userDetails",
         },
         {
-          $sort: { "userDetails.points": -1, "userDetails.lastSubmission": -1 },
+          $sort: { "userDetails.points": -1, "userDetails.lastSubmission": 1 },
         },
       ]);
       const userEntry = leaderboard.findIndex((lb) => lb.email === email);
