@@ -477,6 +477,37 @@ exports.getSubmissionsBymail = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+// exports.getPendingSubmissionsBymail = async (req, res) => {
+//   try {
+//     const email = req.query.email;
+//     const submissions = await Submission.findOne({ email });
+//     res.status(200).json({ success: true, submissions });
+//   } catch (err) {
+//     res.status(500).json({ success: false, error: err.message });
+//   }
+// };
+
+exports.getPendingSubmissionsBymail = async (req, res) => {
+  try {
+    const email = req.query.email;
+    const submissions = await Submission.find({
+      email: email,
+      "tasks.status": "submitted",
+    });
+
+    let tasks = submissions.reduce((accumulator, submission) => {
+      return accumulator.concat(
+        submission.tasks
+          .filter((task) => task.status === "submitted")
+          .map((task) => ({ ...task.toObject(), email: submission.email }))
+      );
+    }, []);
+
+    res.status(200).json({ success: true, tasks });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 
 exports.unchecked = async (req, res) => {
   try {
