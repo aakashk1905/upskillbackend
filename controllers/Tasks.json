@@ -1,0 +1,110 @@
+{
+  "task0": {
+    "name": "Task 0",
+    "points": 10
+  },
+  "task1": {
+    "name": "Task 1",
+    "points": 10
+  },
+  "task2": {
+    "name": "Task 2",
+    "points": 10
+  },
+  "task3": {
+    "name": "Task 3",
+    "points": 10
+  },
+  "task4": {
+    "name": "Task 4",
+    "points": 20
+  },
+  "task5": {
+    "name": "Task 5",
+    "points": 20
+  },
+  "task6": {
+    "name": "Task 6",
+    "points": 20
+  },
+  "task7": {
+    "name": "Task 7",
+    "points": 30
+  },
+  "task8": {
+    "name": "Task 8",
+    "points": 20
+  },
+  "task9": {
+    "name": "Task 9",
+    "points": 20
+  },
+  "grpproject1": {
+    "name": "Grp project 1",
+    "points": 60
+  },
+  "task10": {
+    "name": "Task 10",
+    "points": 20
+  },
+  "task11": {
+    "name": "Task 11",
+    "points": 30
+  },
+  "task12": {
+    "name": "Task 12",
+    "points": 30
+  },
+  "task13": {
+    "name": "Task 13",
+    "points": 40
+  },
+  "task14": {
+    "name": "Task 14",
+    "points": 40
+  },
+  "task15": {
+    "name": "Task 15",
+    "points": 50
+  },
+  "task16": {
+    "name": "Task 16",
+    "points": 70
+  },
+  "task17": {
+    "name": "Task 17",
+    "points": 100
+  },
+  "grpproject2": {
+    "name": "Grp Project 2",
+    "points": 150
+  },
+  "task18": {
+    "name": "Task 18",
+    "points": 70
+  },
+  "task19": {
+    "name": "Task 19",
+    "points": 200
+  },
+  "grpproject3": {
+    "name": "Grp Project 3",
+    "points": 200
+  },
+  "task20": {
+    "name": "Task 20",
+    "points": 150
+  },
+  "task21": {
+    "name": "Task 21",
+    "points": 150
+  },
+  "task22": {
+    "name": "Task 22",
+    "points": 150
+  },
+  "grpproject4": {
+    "name": "Grp Project 4",
+    "points": 400
+  }
+}

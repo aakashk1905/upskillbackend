@@ -1,6 +1,7 @@
 const Submission = require("../models/submissionModel");
 const UserDetails = require("../models/userDetailsModel");
 const User = require("../models/userModel");
+const taskss = require("./Tasks.json");
 
 const levels = [
   {
@@ -287,7 +288,60 @@ const upgrade = {
 //     return res.status(500).json({ success: false, error: err.message });
 //   }
 // };
+const reject = async (number, taskname) => {
+  try {
+    const response = await fetch("https://api.interakt.ai/v1/public/message/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic MGRiYUtNMDNSRlFteUJ2VGJTSkVzTVhBNnl6X2sxX2phc2JldjU3OWhSUTo=",
+      },
+      body: JSON.stringify({
+        countryCode: "+91",
+        phoneNumber: number,
+        type: "Template",
+        template: {
+          name: "task_rejected",
+          languageCode: "en",
+          bodyValues: [taskname],
+        },
+      }),
+    });
 
+    if (!response.ok) throw new Error("Something went Wrong");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+const approved = async (number, taskname, xp) => {
+  try {
+    const response = await fetch("https://api.interakt.ai/v1/public/message/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Basic MGRiYUtNMDNSRlFteUJ2VGJTSkVzTVhBNnl6X2sxX2phc2JldjU3OWhSUTo=",
+      },
+      body: JSON.stringify({
+        countryCode: "+91",
+        phoneNumber: number,
+        type: "Template",
+        template: {
+          name: "task_approved",
+          languageCode: "en",
+          bodyValues: [taskname, xp],
+        },
+      }),
+    });
+
+    if (!response.ok) throw new Error("Something went Wrong");
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
 exports.feedback = async (req, res) => {
   const { email, feedback, status, taskName, teamMembers } = req.body;
 
@@ -306,15 +360,11 @@ exports.feedback = async (req, res) => {
       });
     }
 
-    if (
-      ["grpproject1", "grpproject2", "grpproject3", "grpproject4"].includes(
-        taskName
-      ) &&
-      teamMembers
-    ) {
+    if (taskName.includes("grpproject") && teamMembers) {
       await Promise.all(
         teamMembers.map(async (tm) => {
           const subm = await Submission.findOne({ email: tm });
+
           if (!subm) {
             return res.status(404).json({
               success: false,
@@ -330,17 +380,16 @@ exports.feedback = async (req, res) => {
             updatedTask.feedback = feedback;
             subm.tasks[idx] = updatedTask;
             await subm.save();
-
+            const user = await User.findOne({ email: tm }).populate(
+              "userDetails"
+            );
+            if (!user) {
+              return res.status(404).json({
+                success: false,
+                message: "User not found",
+              });
+            }
             if (status === "approved") {
-              const user = await User.findOne({ email: tm }).populate(
-                "userDetails"
-              );
-              if (!user) {
-                return res.status(404).json({
-                  success: false,
-                  message: "User not found",
-                });
-              }
               let pts = user.userDetails.points || 0;
               pts += upgrade[taskName];
               const ind = levels.findIndex(
@@ -349,6 +398,21 @@ exports.feedback = async (req, res) => {
               user.userDetails.level = levels[ind].name;
               user.userDetails.points = pts;
               await user.userDetails.save();
+              try {
+                await approved(
+                  user.mobile,
+                  taskss[taskName].name,
+                  upgrade[taskName]
+                );
+              } catch (e) {
+                console.log(e.message);
+              }
+            } else {
+              try {
+                await reject(user.mobile, taskss[taskName].name);
+              } catch (e) {
+                console.log(e.message);
+              }
             }
           }
         })
@@ -368,21 +432,31 @@ exports.feedback = async (req, res) => {
       updatedTask.feedback = feedback;
       submission.tasks[idx] = updatedTask;
       await submission.save();
-
+      const user = await User.findOne({ email }).populate("userDetails");
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: "User not found",
+        });
+      }
       if (status === "approved") {
-        const user = await User.findOne({ email }).populate("userDetails");
-        if (!user) {
-          return res.status(404).json({
-            success: false,
-            message: "User not found",
-          });
-        }
         let pts = user.userDetails.points || 0;
         pts += upgrade[taskName];
         const ind = levels.findIndex((l) => l.end >= pts && l.start <= pts);
         user.userDetails.level = levels[ind].name;
         user.userDetails.points = pts;
         await user.userDetails.save();
+        try {
+          await approved(user.mobile, taskss[taskName].name, upgrade[taskName]);
+        } catch (e) {
+          console.log(e.message);
+        }
+      } else {
+        try {
+          await reject(user.mobile, taskss[taskName].name);
+        } catch (e) {
+          console.log(e.message);
+        }
       }
     }
 
@@ -403,23 +477,6 @@ exports.getSubmissionsBymail = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
-
-// exports.unchecked = async (req, res) => {
-//   try {
-//     const submissions = await Submission.find({ "tasks.status": "submitted" });
-
-//     const filteredSubmissions = submissions.map((submission) => {
-//       submission.tasks = submission.tasks.filter(
-//         (task) => task.status !== "approved" && task.status !== "rejected"
-//       );
-//       return submission;
-//     });
-
-//     res.status(200).json({ success: true, submissions: filteredSubmissions });
-//   } catch (err) {
-//     res.status(500).json({ success: false, error: err.message });
-//   }
-// };
 
 exports.unchecked = async (req, res) => {
   try {
