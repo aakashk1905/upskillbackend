@@ -685,7 +685,7 @@ exports.submitTask = async (req, res) => {
 
       if (existingTaskIndex !== -1) {
         if (submission.tasks[existingTaskIndex].status === "approved") {
-          res
+          return res
             .status(200)
             .json({ success: true, message: "Task Already Approved!!!" });
         }
