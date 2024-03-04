@@ -15,5 +15,7 @@ const push = require("./routes/pushRoutes");
 app.use("/api/v1", push);
 const submission = require("./routes/submissionRoutes");
 app.use("/api/v1", submission);
+const video = require("./routes/VideoRoutes");
+app.use("/api/v1", video);
 
 module.exports = app;

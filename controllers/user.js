@@ -336,16 +336,12 @@ exports.lastlogin = async (req, res) => {
   }
 };
 
-// Function to encrypt data
 function encryptData(data, key) {
   return crypto.AES.encrypt(String(data), key).toString();
 }
-
 function decryptData(encryptedData, key) {
   const bytes = crypto.AES.decrypt(encryptedData, key);
-
   const decryptedData = bytes.toString(crypto.enc.Utf8);
-  // console.log("hiii", decryptedData);
   return decryptedData;
 }
 
