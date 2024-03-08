@@ -108,32 +108,32 @@
     "points": 400
   },
   "challange1": {
-    "name": "Challange 1",
+    "name": "Challenge 1",
 
     "points": 40
   },
   "challange2": {
-    "name": "Challange 2",
+    "name": "Challenge 2",
     "points": 20
   },
   "challange3": {
-    "name": "Challange 3",
+    "name": "Challenge 3",
     "points": 30
   },
   "challange4": {
-    "name": "Challange 4",
+    "name": "Challenge 4",
     "points": 70
   },
   "challange5": {
-    "name": "Challange 5",
+    "name": "Challenge 5",
     "points": 20
   },
   "challange6": {
-    "name": "Challange 6",
+    "name": "Challenge 6",
     "points": 40
   },
   "challange7": {
-    "name": "Challange 7",
+    "name": "Challenge 7",
     "points": 40
   }
 }
