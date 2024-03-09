@@ -537,6 +537,28 @@ exports.unchecked = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+exports.all = async (req, res) => {
+  try {
+    const submissions = await Submission.find({});
+
+    // Flatten the array of tasks from all submissions
+    let tasks = submissions.reduce((accumulator, submission) => {
+      return accumulator.concat(
+        submission.tasks.map((task) => ({
+          ...task.toObject(),
+          email: submission.email,
+        }))
+      );
+    }, []);
+
+    // Sort tasks based on submitted date, with the latest date first
+    tasks.sort((a, b) => new Date(b.submittedOn) - new Date(a.submittedOn));
+
+    res.status(200).json({ success: true, tasks });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 
 // const doSubmit = async (ent) => {
 //   const { email, taskName, taskLink, submittedOn, feedback, status } = ent;
