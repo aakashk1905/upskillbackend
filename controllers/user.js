@@ -123,7 +123,6 @@ exports.registerUser = async (req, res) => {
 
     let existingUser = await User.findOne({ email });
 
-    // If the user exists, update the details
     if (existingUser) {
       existingUser.mobile = mobile;
       existingUser.password = password;
@@ -144,13 +143,13 @@ exports.registerUser = async (req, res) => {
       });
     }
 
-    if (mern) {
-      try {
-        await sendNewUser(mobile);
-      } catch (e) {
-        console.log(e);
-      }
-    }
+    // if (mern) {
+    //   try {
+    //     await sendNewUser(mobile);
+    //   } catch (e) {
+    //     console.log(e);
+    //   }
+    // }
     return res.status(200).json({
       success: true,
       newUser,
