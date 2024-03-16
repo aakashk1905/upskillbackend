@@ -14,12 +14,10 @@ const {
   regtop,
   getLeaderboard,
   lastlogin,
-  // migrateUser
 } = require("../controllers/user");
 const router = express.Router();
 
 router.route("/user/register").post(registerUser);
-// router.route("/user/migrate").post(migrateUser);
 router.route("/user/login").post(loginUser);
 router.route("/user/lastlogin").put(lastlogin);
 router.route("/user/forgot").post(forgot);

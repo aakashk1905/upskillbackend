@@ -135,5 +135,45 @@
   "challange7": {
     "name": "Challenge 7",
     "points": 40
+  },
+  "challenge8": {
+    "name": "Challenge 8",
+    "points": 40
+  },
+  "challenge9": {
+    "name": "Challenge 9",
+    "points": 30
+  },
+  "challenge10": {
+    "name": "Challenge 10",
+    "points": 40
+  },
+  "challenge11": {
+    "name": "Challenge 11",
+    "points": 60
+  },
+  "challenge12": {
+    "name": "Challenge 12",
+    "points": 100
+  },
+  "challenge13": {
+    "name": "Challenge 13",
+    "points": 30
+  },
+  "challenge14": {
+    "name": "Challenge 14",
+    "points": 30
+  },
+  "challenge15": {
+    "name": "Challenge 15",
+    "points": 30
+  },
+  "challenge16": {
+    "name": "Challenge 16",
+    "points": 50
+  },
+  "challenge17": {
+    "name": "Challenge 17",
+    "points": 80
   }
 }

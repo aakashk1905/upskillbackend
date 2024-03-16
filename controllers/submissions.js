@@ -121,6 +121,16 @@ const upgrade = {
   challange5: 20,
   challange6: 40,
   challange7: 40,
+  challange8: 40,
+  challange9: 30,
+  challange10: 40,
+  challange11: 60,
+  challange12: 100,
+  challange13: 30,
+  challange14: 30,
+  challange15: 30,
+  challange16: 50,
+  challange17: 80,
 };
 // exports.submitTask = async (req, res) => {
 //   const { email, taskName, taskLink, teamName, teamMembers } = req.body;
