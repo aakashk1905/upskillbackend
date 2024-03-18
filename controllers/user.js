@@ -117,7 +117,7 @@ const moment = require("moment-timezone");
 
 exports.registerUser = async (req, res) => {
   const { name, email, password, mobile, mern } = req.body;
-
+  var details = null;
   try {
     let newUser;
 
@@ -133,7 +133,7 @@ exports.registerUser = async (req, res) => {
         newUser: existingUser,
       });
     } else {
-      const details = await UserDetails.create(req.body);
+      details = await UserDetails.create(req.body);
       newUser = await User.create({
         name,
         email,
@@ -155,6 +155,13 @@ exports.registerUser = async (req, res) => {
       newUser,
     });
   } catch (err) {
+    if (details) {
+      try {
+        await UserDetails.deleteOne({ _id: details._id });
+      } catch (deleteErr) {
+        console.error("Error deleting UserDetails:", deleteErr);
+      }
+    }
     if (err.code === 11000 && err.keyPattern && err.keyPattern.mobile) {
       return res.status(400).json({
         success: false,
@@ -167,7 +174,6 @@ exports.registerUser = async (req, res) => {
         error: "Email ID already exists. Please use a different Email.",
       });
     } else {
-      // Other errors
       return res.status(500).json({ success: false, error: err.message });
     }
   }
